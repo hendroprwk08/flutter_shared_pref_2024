@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20,
                       ),
                       TextFormField(
+                        obscureText: true,
                         controller: _passwordController,
                         decoration: InputDecoration(
                           label: Text('Kata Sandi'),
@@ -99,20 +99,18 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20,
                       ),
                       ElevatedButton(
-                        onPressed: _onSubmit(_emailController.text, _passwordController.text),
+                        onPressed:() async {
+                          _onSubmit(
+                              _emailController.text, _passwordController.text);
+                        },
                         child: const Text('Submit'),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/sukses');
-                          },
-                          child: Text('Lihat'))
                     ],
                   ),
                 ))));
   }
 
-  _onSubmit(String email, String sandi) async {
+  Future _onSubmit(String email, String sandi) async {
     if (_formKey.currentState!.validate()) {
 
       /*

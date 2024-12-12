@@ -22,13 +22,18 @@ class _SuccessPageState extends State<SuccessPage> {
 
   _loadInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _email = (prefs.getString('email') ?? "");
-    _login = (prefs.getBool('login') ?? false);
+
+    setState(() {
+      _email = (prefs.getString('email') ?? "");
+      _login = (prefs.getBool('login') ?? false);
+    });
   }
 
   void _handleLogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove("username");
+    prefs.remove("email");
+    prefs.remove("login");
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       '/',
@@ -42,9 +47,6 @@ class _SuccessPageState extends State<SuccessPage> {
         appBar: AppBar(
           backgroundColor: Colors.cyan,
           iconTheme: const IconThemeData(color: Colors.white),
-          leading: BackButton(
-            onPressed: () => Navigator.of(context).pop(),
-          ),
           title: Text(
             widget.title,
             style: TextStyle(color: Colors.white),
